@@ -279,7 +279,7 @@ const MintPage = () => {
         })
       }
     },
-    [prompt.description]
+    [prompt]
   )
 
   const storeImage = useCallback(
@@ -293,7 +293,7 @@ const MintPage = () => {
       const url = `https://ipfs.io/ipfs/${ipnft}/metadata.json`
       setUrl(url)
     },
-    [prompt.description]
+    [prompt]
   )
   const handleGenerator = useCallback(
     async (description: string) => {

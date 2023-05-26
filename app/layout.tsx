@@ -18,7 +18,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={nunito.className}>
         <Wrapper>
           <nav className={'p-6 flex items-center justify-between  border-b-2'}>
-            <h1 className={'py-3 px-3 font-bold text-4xl text-sky-400/100'}>AI NFT Marketplace</h1>
+            <h1 className={'py-3 px-3 font-bold text-4xl text-sky-400/100'}>
+              <span className=' text-rose-500  drop-shadow-2xl'>AI NFT </span>
+              Marketplace
+            </h1>
             <div className={'flex items-center justify-between  flex-row gap-3'}>
               <Link href={'/'}>
                 <div className='px-3 hover:text-blue-300 font-bold'>Home</div>
@@ -26,7 +29,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href={'/sell'}>
                 <div className=' border-r-2 px-3 hover:text-blue-300 font-bold'>Sell Nft</div>
               </Link>
-
               <Header />
             </div>
           </nav>
