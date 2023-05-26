@@ -1,11 +1,11 @@
 import './globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
-import { Inter } from 'next/font/google'
+import { Nunito } from 'next/font/google'
 import Wrapper from '@/components/Wrapper'
-import Link from 'next/link'
 import Header from '@/components/Header'
+import Link from 'next/link'
 
-const inter = Inter({ subsets: ['latin'] })
+const nunito = Nunito({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'AI NFT Marketplace',
@@ -15,11 +15,18 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={nunito.className}>
         <Wrapper>
-          <nav className={'p-6 flex  items-center justify-between  border-b-2'}>
-            <h1 className={'py-3 px-3 font-bold text-3xl text-sky-400/100'}>AI NFT Marketplace</h1>
-            <div className={'flex items-center justify-between'}>
+          <nav className={'p-6 flex items-center justify-between  border-b-2'}>
+            <h1 className={'py-3 px-3 font-bold text-4xl text-sky-400/100'}>AI NFT Marketplace</h1>
+            <div className={'flex items-center justify-between  flex-row gap-3'}>
+              <Link href={'/'}>
+                <div className='px-3 hover:text-blue-300 font-bold'>Home</div>
+              </Link>
+              <Link href={'/sell'}>
+                <div className=' border-r-2 px-3 hover:text-blue-300 font-bold'>Sell Nft</div>
+              </Link>
+
               <Header />
             </div>
           </nav>

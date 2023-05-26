@@ -7,6 +7,7 @@ import ADDRESSES from '../constants/contract-addresses.json'
 import { parseEther } from 'viem'
 import { Buffer } from 'buffer'
 import axios from 'axios'
+import ABI from '../constants/ai-nft-abi.json'
 import {
   useContractEvent,
   useContractWrite,
@@ -215,12 +216,23 @@ const MintPage = () => {
   const addresses: any = ADDRESSES
   const toast = useToast()
   const { chain } = useNetwork()
-  const { isConnecting } = useAccount()
+  const { isConnected } = useAccount({
+    onConnect() {
+      setButtonLabel('Generate')
+      setDisabled(false)
+    },
+    onDisconnect() {
+      setButtonLabel('Go to connect')
+      setDisabled(true)
+    },
+  })
   const address = addresses[`${chain?.id}`]?.aiNft[0]
   const [prompt, setPrompt] = useState({ name: '', description: '' })
   const [img, setImg] = useState('')
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
+  const [buttonLabel, setButtonLabel] = useState('Go to connect')
+  const [disabled, setDisabled] = useState(true)
 
   const createImage = useCallback(
     async (description: string) => {
@@ -302,7 +314,7 @@ const MintPage = () => {
     enabled: Boolean(url),
   })
   const { write, data } = useContractWrite(config)
-  const { isSuccess } = useWaitForTransaction({ hash: data?.hash })
+  const { isSuccess, isFetching } = useWaitForTransaction({ hash: data?.hash })
   const unwatch = useContractEvent({
     address,
     abi,
@@ -347,8 +359,8 @@ const MintPage = () => {
             }}
           />
           <Button
-            isLoading={loading}
-            // isDisabled={!isConnecting}
+            isLoading={loading || isFetching}
+            isDisabled={disabled}
             border='2px'
             borderColor='blue.500'
             className='block my-10 m-auto w-60'
@@ -356,7 +368,8 @@ const MintPage = () => {
               handleGenerator(prompt.description)
             }}
           >
-            Generate
+            {/* {isConnected ? 'Generate' : 'Go to connect'} */}
+            {buttonLabel}
           </Button>
         </GridItem>
         <GridItem colSpan={2}>
@@ -385,7 +398,7 @@ const MintPage = () => {
               <div className='mt-5 ml-5'>
                 View{' '}
                 <div className='inline text-blue-600'>
-                  <a href={url}>Metadata</a>
+                  {url === '' ? <span className=' text-black'>Nothing</span> : <a href={url}>Metadata</a>}
                 </div>
               </div>
             </>
